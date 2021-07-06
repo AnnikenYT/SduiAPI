@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 def unix2dt(ts):
-    print(datetime.utcfromtimestamp(int(ts)).strftime('%Y-%m-%d %H:%M:%S'))
+    return datetime.utcfromtimestamp(int(ts)).strftime('%Y-%m-%d %H:%M:%S')
 
 ### TABLES: AnnikenYT:305870 BigBoy32:305516
 
@@ -40,13 +40,13 @@ def get_lessons(jdata=None):
             this_teacher = ni["teachers"][0]["shortcut"]
 
             try:
-                for i in teacher_map[this_teacher]:
-                    dmap.append(i)
+                for y in teacher_map[this_teacher]:
+                    dmap.append(unix2dt(y))
 
             except: pass
 
             for i in ni["dates"]:
-                dmap.append(i)
+                dmap.append(unix2dt(i))
 
             dates = dmap
 
