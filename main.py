@@ -2,6 +2,11 @@ import requests
 import secrets
 import json
 
+from datetime import datetime
+
+def unix2dt(ts):
+    print(datetime.utcfromtimestamp(int(ts)).strftime('%Y-%m-%d %H:%M:%S'))
+
 ### TABLES: AnnikenYT:305870 BigBoy32:305516
 
 def prepare_json_data(jdata):
@@ -21,18 +26,36 @@ def get_data(target_table):
 
 def get_lessons(jdata=None):
 
-    lessons = {}
+    teacher_map = {}
 
     jdata = prepare_json_data(jdata)
 
-    for i in jdata["data"]["lessons"]:
-
-        try:
+    try:
+        for i in jdata["data"]["lessons"]:
+            
             ni = jdata["data"]["lessons"][i]
-            lessons[i] = [ni["teachers"][0]["name"], ni["teachers"][0]["id"], ni["course"]["meta"]["displayname"]]
 
-        except Exception as e:
-            print("(Mild) Error at " + str(i))
+            dmap = []
 
-    return lessons
+            this_teacher = ni["teachers"][0]["shortcut"]
 
+            try:
+                for i in teacher_map[this_teacher]:
+                    dmap.append(i)
+
+            except: pass
+
+            for i in ni["dates"]:
+                dmap.append(i)
+
+            dates = dmap
+
+            class_name = ni["meta"]["displayname"]
+
+            teacher_map[this_teacher] = [dates, class_name]
+    except:
+        pass
+
+    return teacher_map
+
+print(get_lessons())
