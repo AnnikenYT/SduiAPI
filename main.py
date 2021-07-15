@@ -11,6 +11,13 @@
 
 ### Variables ###
 
+TABLE_ID = 305870
+TIME_DELTA = 1
+MAX_DATA_LIFETIME = 3600
+DEBUG = False
+
+### Code - Do not touch, unless you know what your doing ###
+
 import os
 from datetime import datetime, date, timedelta
 from colorama import Fore, Back, Style
@@ -19,14 +26,6 @@ import calendar
 import json
 import secrets
 import requests
-TABLE_ID = 305870
-TIME_DELTA = 1
-MAX_DATA_LIFETIME = 3600
-DEBUG = False
-
-
-### Code - Do not touch, unless you know what your doing ###
-
 
 def unix2dt(ts):
     """
@@ -49,16 +48,21 @@ def load_data():
     Load data from downloaded data
     """
     if not os.path.exists('LAST_DOWNLOAD'):
-        open("LAST_DOWNLOAD", "w+")
+        get_data(TABLE_ID)
     with open("LAST_DOWNLOAD", "r") as file:
         last_download = file.read()
-        if last_download != "":
+        if last_download.strip() != "":
             last_download = unix2dt(last_download)
-            diff = dt2unix(datetime.now()) - last_download
-            if diff <= MAX_DATA_LIFETIME:
+            last = datetime.strptime(last_download, "%Y-%m-%d %H:%M:%S")
+            diff = datetime.now() - last
+            if diff.total_seconds() >= MAX_DATA_LIFETIME:
                 get_data(TABLE_ID)
+                return json.load(open("data.json", "r"))
             else:
                 return json.load(open("data.json", "r"))
+        else:
+            get_data(TABLE_ID)
+            return json.load(open("data.json", "r"))
 
 
 def get_data(target_table):
@@ -67,14 +71,15 @@ def get_data(target_table):
     """
     with open("LAST_DOWNLOAD", "w+") as file:
         file.seek(0)
-        file.write(dt2unix(datetime.now()))
+        file.write(str(dt2unix(datetime.now())))
+    print(Fore.RED + "Data too old, downloading new data." + Style.RESET_ALL)
     url = f'https://api.sdui.app/v1/users/{str(target_table)}/timetable'
     headers = {
         "authorization": secrets.token,
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
     r = requests.get(url, headers=headers)
-    json.dump(r.json(), open("data.json", "rw"))
+    json.dump(r.json(), open("data.json", "w+"))
 
 
 def get_lessons():
