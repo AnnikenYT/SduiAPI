@@ -12,7 +12,7 @@
 ### Variables ###
 
 TABLE_ID = 305870
-TIME_DELTA = 6
+TIME_DELTA = 10
 MAX_DATA_LIFETIME = 3600
 DEBUG = False
 
@@ -227,9 +227,9 @@ def cli_text():
         except:
 
             t+=1
-            print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
+            print(Fore.BLACK + Style.BRIGHT + Back.LIGHTGREEN_EX +
                           "[ HOUR " + str(t) + " ]" + " ✔ Unchanged: " + Style.RESET_ALL)
-            print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
+            print(Fore.BLACK + Style.BRIGHT + Back.LIGHTGREEN_EX +
                         "|-> " + i["subject"]   + Style.RESET_ALL)
 
         else:
@@ -240,8 +240,8 @@ def cli_text():
                 print(Fore.BLACK + Style.BRIGHT + Back.CYAN + "|--> To Teacher " + i["teacher"] + Style.RESET_ALL)
 
             elif i['oftype'] == "CANCLED":
-                print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Changed: " + Style.RESET_ALL)
-                print(Fore.BLACK + Style.BRIGHT + Back.LIGHTBLUE_EX + "|->" + strike(i["subject"]) + " Cancled!" + Style.RESET_ALL)
+                print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Cancled: " + Style.RESET_ALL)
+                print(Fore.WHITE + Style.BRIGHT + Back.LIGHTBLACK_EX + "|-> " + i["subject"] + " Cancled!" + Style.RESET_ALL)
             
             elif i["oftype"] == "CHANGE":
                 print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Changed: " + Style.RESET_ALL)
