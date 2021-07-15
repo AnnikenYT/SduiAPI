@@ -142,8 +142,15 @@ def get_lessons_for_day(datetoday: datetime):
     """
     print(Fore.CYAN + Style.BRIGHT +
           f"Checking lessons for {datetoday.date()+timedelta(1)}" + Style.RESET_ALL)
-    jdata = load_data()
-    lessons = jdata["data"]["lessons"]
+    try:
+        jdata = load_data()
+        lessons = jdata["data"]["lessons"]
+    except:
+        print(Fore.RED + "Something seems to be wrong with your JSON file. Redownloading..." + Style.RESET_ALL)
+        os.remove("LAST_DOWNLOAD")
+        jdata = load_data()
+        lessons = jdata["data"]["lessons"]
+
     skip = []
     found = []
 
@@ -196,9 +203,6 @@ def strike(text):
 
 def cli_text():
 
-    jdata = load_data()
-    lessons = jdata["data"]["lessons"]
-
     data = get_lessons_for_day(datetoday=datetime.now().replace(
     hour=22, minute=0, second=0)-timedelta(TIME_DELTA+1))
 
@@ -226,23 +230,23 @@ def cli_text():
             print(Fore.BLACK + Style.BRIGHT + Back.LIGHTGREEN_EX +
                           "[ HOUR " + str(t) + " ]" + " ✔ Unchanged: " + Style.RESET_ALL)
             print(Fore.BLACK + Style.BRIGHT + Back.LIGHTGREEN_EX +
-                        "|-> " + i["subject"]   + Style.RESET_ALL)
+                        " |-> " + i["subject"]   + Style.RESET_ALL)
 
         else:
             t += 1
             if i["oftype"] == "SUB":
                 print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Changed: " + Style.RESET_ALL)
-                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + "|->" + i["subject"] + Style.RESET_ALL)
-                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + "|--> To Teacher " + i["teacher"] + Style.RESET_ALL)
+                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + " |->" + i["subject"] + Style.RESET_ALL)
+                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + "   |--> To Teacher " + i["teacher"] + Style.RESET_ALL)
 
             elif i['oftype'] == "CANCLED":
                 print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Cancled: " + Style.RESET_ALL)
-                print(Fore.WHITE + Style.BRIGHT + Back.LIGHTBLACK_EX + "|-> " + i["subject"] + " Cancled!" + Style.RESET_ALL)
+                print(Fore.WHITE + Style.BRIGHT + Back.LIGHTBLACK_EX + " |-> " + i["subject"] + " Cancled!" + Style.RESET_ALL)
             
             elif i["oftype"] == "CHANGE":
                 print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Changed: " + Style.RESET_ALL)
-                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + "|->" + i["subject"] + Style.RESET_ALL)
-                print(Fore.BLACK + Style.BRIGHT + Back.MAGENTA + "|--> To Room " + i["room"] + Style.RESET_ALL)
+                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + " |->" + i["subject"] + Style.RESET_ALL)
+                print(Fore.BLACK + Style.BRIGHT + Back.MAGENTA + "  |--> To Room " + i["room"] + Style.RESET_ALL)
     """
     for it in unchanged:
         print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
