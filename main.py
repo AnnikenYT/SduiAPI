@@ -11,8 +11,8 @@
 
 ### Variables ###
 
-TABLE_ID = 305516
-TIME_DELTA = 0
+TABLE_ID = 305870
+TIME_DELTA = 2
 MAX_DATA_LIFETIME = 3600
 DEBUG = False
 
@@ -184,7 +184,7 @@ def get_lessons_for_day(datetoday: datetime):
                     if str(i_) != str('[]'):
                         pass
 
-    return [skip, found]
+    return [cleanlist(skip), found]
                 
                 
 
