@@ -1,3 +1,4 @@
+
 #   _____     _       _  ___  ______ _____   _    _
 #  /  ___|   | |     (_)/ _ \ | ___ \_   _| | |  | |
 #  \ `--.  __| |_   _ _/ /_\ \| |_/ / | |   | |  | |_ __ __ _ _ __  _ __   ___ _ __
@@ -159,6 +160,8 @@ def get_lessons_for_day(datetoday: datetime):
                                     skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"beginn":targets["time_begins_at"], "end":targets["time_ends_at"],})
                                 elif targets["kind"] == "CANCLED":
                                     skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "beginn":targets["time_begins_at"], "end":targets["time_ends_at"]})
+                                elif targets["king"] == "BOOKABLE_CHANGE":
+                                    skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CHANGE", "beginn":targets["time_begins_at"], "end":targets["time_ends_at"], "room":targets["bookables"][0]["shortcut"]})
                                 else:
                                     pass
                 if DEBUG:
