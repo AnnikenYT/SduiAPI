@@ -1,11 +1,11 @@
 # SduiAPI
 ### A simple wrapper for the SduiAPI
 ## Features:
-- [ ] Pull data from the [Sdui API](https://api.sdui.de/)
+- [X] Pull data from the [Sdui API](https://api.sdui.de/)
 
-- [ ] Parse the data to a readable format
+- [X] Parse the data to a readable format
 
-- [ ] Check if data is outdated
+- [X] Check if data is outdated
 
 - [ ] Sort data
 
