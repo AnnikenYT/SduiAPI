@@ -1,17 +1,17 @@
 # SduiAPI
 ### A simple wrapper for the SduiAPI
 ## Features:
-[] Pull data from the [Sdui API](https://api.sdui.de/)
+- [ ] Pull data from the [Sdui API](https://api.sdui.de/)
 
-[] Parse the data to a readable format
+- [ ] Parse the data to a readable format
 
-[] Check if data is outdated
+- [ ] Check if data is outdated
 
-[] Sort data
+- [ ] Sort data
 
-[] Process cancelations of lessons
+- [ ] Process cancelations of lessons
 
-[] Add to [google calendar](https://calendar.google.com/)
+- [ ] Add to [google calendar](https://calendar.google.com/)
 
 ## Setup
 * [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
