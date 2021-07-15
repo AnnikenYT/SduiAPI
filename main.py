@@ -1,4 +1,3 @@
-
 #   _____     _       _  ___  ______ _____   _    _
 #  /  ___|   | |     (_)/ _ \ | ___ \_   _| | |  | |
 #  \ `--.  __| |_   _ _/ /_\ \| |_/ / | |   | |  | |_ __ __ _ _ __  _ __   ___ _ __
@@ -120,6 +119,18 @@ def get_lessons():
 
     return teacher_map
 
+def cleanlist(lst):
+    fixed_list = []
+    broken_list = []
+
+    for i in lst:
+        if str(i) not in broken_list and i != []:
+            broken_list.append(str(i))
+            fixed_list.append(i)
+
+    print(fixed_list)
+    
+    return fixed_list
 
 def get_lessons_for_day(datetoday: datetime):
     """
@@ -129,12 +140,27 @@ def get_lessons_for_day(datetoday: datetime):
           f"Checking lessons for {datetoday.date()+timedelta(1)}" + Style.RESET_ALL)
     jdata = load_data()
     lessons = jdata["data"]["lessons"]
+    skip = []
+    found = []
+
     for i in lessons:
         if lessons[i] is not None:
             for d in lessons[i]["dates"]:
                 unixtoday = dt2unix(datetoday)
                 checkdate = unixtoday
                 lessondate = d
+
+                
+                if lessons[i]["substituted_target_lessons"] != []:
+                    for targets in lessons[i]["substituted_target_lessons"]:
+                        for targetdate in targets["dates"]:
+                            if targetdate == checkdate:
+                                if targets["kind"] == "SUBSTITUTION":
+                                    skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"beginn":targets["time_begins_at"], "end":targets["time_ends_at"],})
+                                elif targets["kind"] == "CANCLED":
+                                    skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "beginn":targets["time_begins_at"], "end":targets["time_ends_at"]})
+                                else:
+                                    pass
                 if DEBUG:
                     print(Fore.BLACK + Style.DIM +
                           f"Checking date: {lessondate} against today's date {checkdate}" + Style.RESET_ALL)
@@ -143,7 +169,8 @@ def get_lessons_for_day(datetoday: datetime):
                           "✔ Found: " + Style.RESET_ALL)
                     print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
                           lessons[i]["meta"]["displayname"] + Style.RESET_ALL)
-
+                    
+                    found.append({"subject":lessons[i]["meta"]["displayname"], "begin":lessons[i]["time_begins_at"], "end":lessons[i]["time_ends_at"]})
 
                 else:
                     if DEBUG:
@@ -151,8 +178,14 @@ def get_lessons_for_day(datetoday: datetime):
                               "✖ Nothing Found" + Style.RESET_ALL)
                     else:
                         pass
-        # TODO return array with hours today
 
+                for i_ in skip:
+                    if str(i_) != str('[]'):
+                        pass
 
-get_lessons_for_day(datetoday=datetime.now().replace(
-    hour=22, minute=0, second=0)-timedelta(TIME_DELTA+1))
+    return [cleanlist(skip), found]
+                
+                
+
+print(get_lessons_for_day(datetoday=datetime.now().replace(
+    hour=22, minute=0, second=0)-timedelta(TIME_DELTA+1)))
