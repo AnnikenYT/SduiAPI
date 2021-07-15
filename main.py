@@ -12,7 +12,7 @@
 ### Variables ###
 
 TABLE_ID = 305870
-TIME_DELTA = 20
+TIME_DELTA = 10
 MAX_DATA_LIFETIME = 3600
 DEBUG = False
 
