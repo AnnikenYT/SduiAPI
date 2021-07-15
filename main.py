@@ -12,7 +12,7 @@
 ### Variables ###
 
 TABLE_ID = 305870
-TIME_DELTA = 1
+TIME_DELTA = 2
 MAX_DATA_LIFETIME = 3600
 DEBUG = False
 
@@ -143,6 +143,8 @@ def get_lessons_for_day(datetoday: datetime):
                           "✔ Found: " + Style.RESET_ALL)
                     print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
                           lessons[i]["meta"]["displayname"] + Style.RESET_ALL)
+
+
                 else:
                     if DEBUG:
                         print(Fore.BLACK + Style.BRIGHT + Back.RED +
