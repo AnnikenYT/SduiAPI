@@ -1,4 +1,5 @@
 /data.json
 /secrets.py
 /__pycache__
-LAST_DOWNLOAD
+#LAST_DOWNLOAD
+#testpacket.py
