@@ -12,11 +12,14 @@
 ### Variables ###
 
 TABLE_ID = 305870
-TIME_DELTA = 2
+TIME_DELTA = 20
 MAX_DATA_LIFETIME = 3600
 DEBUG = False
 
 ### Code - Do not touch, unless you know what your doing ###
+
+from itertools import repeat, chain
+
 
 import os
 from datetime import datetime, date, timedelta
@@ -139,46 +142,39 @@ def get_lessons_for_day(datetoday: datetime):
     """
     print(Fore.CYAN + Style.BRIGHT +
           f"Checking lessons for {datetoday.date()+timedelta(1)}" + Style.RESET_ALL)
-    jdata = load_data()
-    lessons = jdata["data"]["lessons"]
+    try:
+        jdata = load_data()
+        lessons = jdata["data"]["lessons"]
+    except:
+        print(Fore.RED + "Something seems to be wrong with your JSON file. Redownloading..." + Style.RESET_ALL)
+        os.remove("LAST_DOWNLOAD")
+        jdata = load_data()
+        lessons = jdata["data"]["lessons"]
+
     skip = []
     found = []
 
     for i in lessons:
         if lessons[i] is not None:
+            
             for d in lessons[i]["dates"]:
                 unixtoday = dt2unix(datetoday)
                 checkdate = unixtoday
                 lessondate = d
 
-                
                 if lessons[i]["substituted_target_lessons"] != []:
                     for targets in lessons[i]["substituted_target_lessons"]:
                         for targetdate in targets["dates"]:
                             if targetdate == checkdate:
                                 if targets["kind"] == "SUBSTITUTION":
-                                    skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"beginn":targets["time_begins_at"], "end":targets["time_ends_at"],})
+                                    skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"begin":targets["time_begins_at"], "end":targets["time_ends_at"],})
                                 elif targets["kind"] == "CANCLED":
-                                    skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "beginn":targets["time_begins_at"], "end":targets["time_ends_at"]})
+                                    skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "begin":targets["time_begins_at"], "end":targets["time_ends_at"]})
                                 elif targets["kind"] == "BOOKABLE_CHANGE":
-                                    skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CHANGE", "beginn":targets["time_begins_at"], "end":targets["time_ends_at"], "room":targets["bookables"][0]["shortcut"]})
+                                    skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CHANGE", "begin":targets["time_begins_at"], "end":targets["time_ends_at"], "room":targets["bookables"][0]["shortcut"]})
                                 else:
                                     pass
-                if DEBUG:
-                    print(Fore.BLACK + Style.DIM +
-                          f"Checking date: {lessondate} against today's date {checkdate}" + Style.RESET_ALL)
-                if lessondate == checkdate:
-                    print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
-                          "✔ Found: " + Style.RESET_ALL)
-                    print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
-                          lessons[i]["meta"]["displayname"] + Style.RESET_ALL)
-                    
-                    found.append({"subject":lessons[i]["meta"]["displayname"], "begin":lessons[i]["time_begins_at"], "end":lessons[i]["time_ends_at"]})
 
-                else:
-                    if DEBUG:
-                        print(Fore.BLACK + Style.BRIGHT + Back.RED +
-                              "✖ Nothing Found" + Style.RESET_ALL)
                     else:
                         pass
 
@@ -186,9 +182,83 @@ def get_lessons_for_day(datetoday: datetime):
                     if str(i_) != str('[]'):
                         pass
 
-    return [cleanlist(skip), found]
-                
-                
+                if lessondate == checkdate:
+                    flag = False
+                    for __i in skip:
+                        if __i["subject"] == lessons[i]["meta"]["displayname"]:
+                            flag = True
+                        else:
+                            pass
+                    if not flag:
+                        found.append({"subject":lessons[i]["meta"]["displayname"], "begin":lessons[i]["time_begins_at"], "end":lessons[i]["time_ends_at"]})
 
-print(get_lessons_for_day(datetoday=datetime.now().replace(
-    hour=22, minute=0, second=0)-timedelta(TIME_DELTA+1)))
+
+    return [cleanlist(skip), found]
+
+def strike(text):
+    result = ''
+    for c in text:
+        result = result + c + '\u0336'
+    return result
+
+def cli_text():
+
+    data = get_lessons_for_day(datetoday=datetime.now().replace(
+    hour=22, minute=0, second=0)-timedelta(TIME_DELTA+1))
+
+    skip = data[0]
+    unchanged = data[1]
+
+    combilist = []
+    combilist_timesort = []
+
+    for i in skip:
+        combilist.append(i)
+    
+    for i in unchanged:
+        combilist.append(i)
+
+    combilist = sorted(combilist, key=lambda x: x["begin"])
+    
+    t = 0
+
+    for i in combilist:
+        try: i["oftype"]
+        except:
+
+            t+=1
+            print(Fore.BLACK + Style.BRIGHT + Back.LIGHTGREEN_EX +
+                          "[ HOUR " + str(t) + " ]" + " ✔ Unchanged: " + Style.RESET_ALL)
+            print(Fore.BLACK + Style.BRIGHT + Back.LIGHTGREEN_EX +
+                        " |-> " + i["subject"]   + Style.RESET_ALL)
+
+        else:
+            t += 1
+            if i["oftype"] == "SUB":
+                print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Changed: " + Style.RESET_ALL)
+                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + " |->" + i["subject"] + Style.RESET_ALL)
+                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + "   |--> To Teacher " + i["teacher"] + Style.RESET_ALL)
+
+            elif i['oftype'] == "CANCLED":
+                print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Cancled: " + Style.RESET_ALL)
+                print(Fore.WHITE + Style.BRIGHT + Back.LIGHTBLACK_EX + " |-> " + i["subject"] + " Cancled!" + Style.RESET_ALL)
+            
+            elif i["oftype"] == "CHANGE":
+                print(Fore.WHITE + Style.BRIGHT + Back.RED + "[ HOUR " + str(t) + " ]" + " ✖ Changed: " + Style.RESET_ALL)
+                print(Fore.BLACK + Style.BRIGHT + Back.CYAN + " |->" + i["subject"] + Style.RESET_ALL)
+                print(Fore.BLACK + Style.BRIGHT + Back.MAGENTA + "  |--> To Room " + i["room"] + Style.RESET_ALL)
+    """
+    for it in unchanged:
+        print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
+                          "✔ Unchanged: " + Style.RESET_ALL)
+        print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
+                        "|->" + it["subject"]   + Style.RESET_ALL)
+    
+    for sk in skip:
+        if sk["oftype"] == "SUB":
+            print(Fore.WHITE + Style.BRIGHT + Back.RED + "✖ Changed: " + Style.RESET_ALL)
+            print(Fore.BLACK + Style.BRIGHT + Back.CYAN + "|->" + sk["subject"] + Style.RESET_ALL)
+            print(Fore.BLACK + Style.BRIGHT + Back.CYAN + "|--> To Teacher " + sk["teacher"] + Style.RESET_ALL)
+
+    """
+cli_text()
