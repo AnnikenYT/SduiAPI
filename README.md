@@ -7,6 +7,18 @@
 - [ ] Sort data
 - [ ] Process cancelations of lessons
 - [ ] Add to [google calendar](https://calendar.google.com/)
+- [ ] Pull data from the [Sdui API](https://api.sdui.de/)
+
+- [ ] Parse the data to a readable format
+
+- [ ] Check if data is outdated
+
+- [ ] Sort data
+
+- [ ] Process cancelations of lessons
+
+- [ ] Add to [google calendar](https://calendar.google.com/)
+
 ## Setup
 * [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
 * Extract the file to a location where you find it again.
