@@ -7,8 +7,14 @@
 - [ ] Sort data
 - [ ] Process cancelations of lessons
 - [ ] Add to [google calendar](https://calendar.google.com/)
-- [ ] Pull data from the [Sdui API](https://api.sdui.de/)
 
+## Requirements
+* Python 3.*
+* PIP
+* The "colorama" package. To install this, use:
+```bash
+python3 -m pip install colorama
+```
 ## Setup
 * [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
 * Extract the file to a location where you find it again.
