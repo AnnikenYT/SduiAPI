@@ -143,9 +143,7 @@ def get_lessons_for_day(datetoday: datetime):
                           "✔ Found: " + Style.RESET_ALL)
                     print(Fore.BLACK + Style.BRIGHT + Back.GREEN +
                           lessons[i]["meta"]["displayname"] + Style.RESET_ALL)
-                    
-                    for i_ in lessons[i]["substituted_target_lessons"]:
-                        print(i_["kind"], i_["course"], unix2dt(i_["dates"][0]))
+
 
                 else:
                     if DEBUG:
