@@ -8,6 +8,11 @@ import json
 import secrets
 import requests
 
+TABLE_ID = 0
+TIME_DELTA = 0
+MAX_DATA_LIFETIME = 3600
+DEBUG = False
+
 def unix2dt(ts):
     """
     Convert unix timestamp to datetime
@@ -78,11 +83,6 @@ def cleanlist(lst):
 
 class SduiAPI:
 
-    TABLE_ID = 0
-    TIME_DELTA = 0
-    MAX_DATA_LIFETIME = 3600
-    DEBUG = False
-
     def __init__(self, tableid, timedelta=0, maxdatalifetime=3600, debug=False) -> None:
         TABLE_ID = tableid
         TIME_DELTA = timedelta
@@ -91,10 +91,7 @@ class SduiAPI:
 
     def get_lessons_for_day(self, datetoday: datetime):
 
-        TABLE_ID = self.TABLE_ID
-        TIME_DELTA = self.TIME_DELTA
-        MAX_DATA_LIFETIME = self.MAX_DATA_LIFETIME
-        DEBUG = self.DEBUG
+
 
         """
         Get lessons for a specific day
