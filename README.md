@@ -1,18 +1,12 @@
 # SduiAPI
 ### A simple wrapper for the SduiAPI
 ## Features:
-[x] Pull data from the [Sdui API](https://api.sdui.de/)
-
-[x] Parse the data to a readable format
-
-[x] Check if data is outdated
-
-[ ] Sort data
-
-[ ] Process cancelations of lessons
-
-[ ] Add to [google calendar](https://calendar.google.com/)
-
+- [x] Pull data from the [Sdui API](https://api.sdui.de/)
+- [x] Parse the data to a readable format
+- [x] Check if data is outdated
+- [ ] Sort data
+- [ ] Process cancelations of lessons
+- [ ] Add to [google calendar](https://calendar.google.com/)
 ## Setup
 * [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
 * Extract the file to a location where you find it again.
@@ -28,7 +22,7 @@ If you are a bit more advanced, you can also use libraries like "cryptography" t
 * Now, follow the tutorials on [Wrapper usage](#Wrapper) if you want to use this in your own project, or [CLI usage](#CLI)
 
 ## <a id="Wrapper"></a>Wrapper usage
-[ ] Coming soon!
+- [ ] Coming soon!
 
 ## <a id="CLI"></a>CLI Usage
 To use the CLI, you need to know your Timetable ID.
