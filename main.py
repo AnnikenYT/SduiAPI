@@ -155,10 +155,6 @@ def get_lessons_for_day(datetoday: datetime):
                 checkdate = unixtoday
                 lessondate = d
 
-                print(Fore.BLACK + Style.DIM +
-                f"Checking date: {lessondate} against today's date {checkdate}" + Style.RESET_ALL)
-
-                
                 if lessons[i]["substituted_target_lessons"] != []:
                     for targets in lessons[i]["substituted_target_lessons"]:
                         for targetdate in targets["dates"]:
