@@ -34,7 +34,7 @@ If you are a bit more advanced, you can also use libraries like "cryptography" t
 * Now, follow the tutorials on [Wrapper usage](#Wrapper) if you want to use this in your own project, or [CLI usage](#CLI)
 
 ## <a id="Wrapper"></a>Wrapper usage
-- [ ] Coming soon!
+- [] Available!
 
 ## <a id="CLI"></a>CLI Usage
 To use the CLI, you need to know your Timetable ID.
