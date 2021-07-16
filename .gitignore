@@ -6,6 +6,7 @@ sduilogo.png
 credentials/
 */data.json
 */secrets.py
+*/*/secrets.py
 */credentials.*
 */__pycache__/
 */token.*
