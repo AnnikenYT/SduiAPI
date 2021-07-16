@@ -1,8 +1,10 @@
-/data.json
-/secrets.py
 /__pycache__
 LAST_DOWNLOAD
 testpacket.py
 .vscode/
 sduilogo.png
-googlecalendarapis/credentials.json
+credentials/
+*/data.json
+*/secrets.py
+*/credentials.*
+*/__pycache__/
