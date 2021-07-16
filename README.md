@@ -20,7 +20,7 @@
 python3 -m pip install colorama
 ```
 ## Setup
-* [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
+* [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file (or clone it with git cli, if you know what you are doing).
 * Extract the file to a location where you find it again.
 * Create a file called `secrets.py` in the root location.
 ![secrets.py file location](/docs/images/secrets.png)
