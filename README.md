@@ -1,14 +1,18 @@
 # SduiAPI
 ### A simple wrapper for the SduiAPI
+![discord](https://img.shields.io/discord/865504310010839080?label=discord&style=flat-square)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/AnnikenYT/SduiAPI?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)
+![GitHub Repo stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)
 ## Features:
 - [x] Pull data from the [Sdui API](https://api.sdui.de/)
 - [x] Parse the data to a readable format
 - [x] Check if data is outdated
-- [X] Sort data (Currently Only in Main.py)
+- [X] Sort data (Currently Only in [CLI](main.py))
 - [X] Process cancelations of lessons
 - [ ] Add to [google calendar](https://calendar.google.com/)
 
-## Requirements
+## <a id="requirements"></a> Requirements
 * Python 3.*
 * PIP
 * The "colorama" package. To install this, use:
