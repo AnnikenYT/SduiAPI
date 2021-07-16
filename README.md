@@ -13,9 +13,9 @@
 - [x] Pull data from the [Sdui API](https://api.sdui.de/)
 - [x] Parse the data to a readable format
 - [x] Check if data is outdated
-- [X] Sort data (Currently Only in [CLI](sdui-api-core/main.py))
-- [X] Process cancellations of lessons
-- [ ] Add to [google calendar](https://calendar.google.com/)
+- [x] Sort data (Currently Only in [CLI](sdui-api-core/main.py))
+- [x] Process cancellations of lessons
+- [x] Add to [google calendar](https://calendar.google.com/)
 
 ## <a id="requirements"></a> Requirements
 * Python 3.*
