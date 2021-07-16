@@ -1,9 +1,9 @@
 # SduiAPI
 ### A simple wrapper for the SduiAPI
 ![discord](https://img.shields.io/discord/865504310010839080?label=discord&style=flat-square)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/AnnikenYT/SduiAPI?style=flat-square)
-![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)
-![GitHub Repo stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)
+[![GitHub issues](https://img.shields.io/github/issues/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/issues)
+[![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/network)
+[![GitHub stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/stargazers)
 ## Features:
 - [x] Pull data from the [Sdui API](https://api.sdui.de/)
 - [x] Parse the data to a readable format
