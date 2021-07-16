@@ -8,7 +8,7 @@
 - [x] Pull data from the [Sdui API](https://api.sdui.de/)
 - [x] Parse the data to a readable format
 - [x] Check if data is outdated
-- [X] Sort data (Currently Only in [CLI](main.py))
+- [X] Sort data (Currently Only in [CLI](sdui-api-core/main.py))
 - [X] Process cancelations of lessons
 - [ ] Add to [google calendar](https://calendar.google.com/)
 
