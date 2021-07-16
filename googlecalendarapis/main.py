@@ -6,9 +6,31 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
+from datetime import datetime, timedelta
+
 # The script needs userinfo.profile, for auth
-#SCOPES = ['https://www.googleapis.com/auth/calendar.events', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/userinfo.profile']
-SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
+SCOPES = ['https://www.googleapis.com/auth/calendar.events', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/userinfo.profile']
+
+def create_event(time_start, time_end, name, service_handler):
+
+    formdate = '-'.join(str(datetime.now().strftime("%Y-%D-%M")).replace("/", "-").split("-")[0:3])
+
+    GMT_OFF = '+02:00'
+
+    print(formdate + "T" + str(timedelta(seconds=time_start)) + GMT_OFF)
+
+    GMT_OFF = '+02:00'
+    EVENT = {
+        'summary': 'Sample',
+        'start': {'dateTime': formdate + "T" + str(timedelta(seconds=time_start)) + GMT_OFF},
+        'end': {'dateTime': formdate + "T" + str(timedelta(seconds=time_end)) + GMT_OFF},
+    }
+
+
+    event = service_handler.events().insert(calendarId='primary', body=EVENT).execute()
+
+    print("Created Event for:", name)
+
 
 def main():
     """Shows basic usage of the Google Calendar API.
@@ -34,20 +56,7 @@ def main():
 
     service = build('calendar', 'v3', credentials=creds)
 
-    # Call the Calendar API
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
-    events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=10, singleEvents=True,
-                                        orderBy='startTime').execute()
-    events = events_result.get('items', [])
-
-    if not events:
-        print('No upcoming events found.')
-    for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
-
+    create_event(35000, 37000, "Test Event", service)
 
 if __name__ == '__main__':
     main()
