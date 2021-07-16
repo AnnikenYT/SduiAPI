@@ -11,6 +11,7 @@
 
 ### Imports, do not touch! ###
 from __future__ import print_function
+from sdui_api_cli.main import TABLE_ID
 from secrets import token
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
@@ -39,6 +40,7 @@ print(
 
 CALENDAR_ID = "primary"
 TIME_DELTA = -7
+TABLE_ID = ""
 
 ### Code - Do not touch unless you know what you are doing ###
 
@@ -46,12 +48,12 @@ TIME_DELTA = -7
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-Wrapper = Wrapper(TOKEN=token, TABLE_ID=305870)
+Wrapper = Wrapper(TOKEN=token, TABLE_ID=TABLE_ID)
 
 
 def main():
-    """Shows basic usage of the Google Calendar API.
-    Prints the start and name of the next 10 events on the user's calendar.
+    """
+    The main code to add all events using the API Wrapper package
     """
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
@@ -104,6 +106,9 @@ def main():
 
 
 def create_event(time_start, time_end, name, desc, service_handler, colorId):
+    """
+    Add an event using the google calendar api
+    """
     time_with_delta = datetime.now() - timedelta(TIME_DELTA)
 
     formdate = '-'.join(str(time_with_delta.strftime("%Y-%D-%M")
