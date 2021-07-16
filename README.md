@@ -10,14 +10,14 @@
 (This code is currently very very inefficient, if you have a better methode, please feel free to submit a pull request.)
 
 ## Features:
-- [x] Pull data from the [Sdui API](https://api.sdui.de/)
-- [x] Parse the data to a readable format
-- [x] Check if data is outdated
-- [x] Sort data (Currently Only in [CLI](sdui-api-core/main.py))
-- [x] Process cancellations of lessons
-- [x] Add to [google calendar](https://calendar.google.com/)
+- [x] Pull data from the [Sdui API](https://api.sdui.de/)
+- [x] Parse the data to a readable format
+- [x] Check if data is outdated
+- [x] Sort data (Currently Only in [CLI](sdui-api-core/main.py))
+- [x] Process cancellations of lessons
+- [x] Add to [google calendar](https://calendar.google.com/)
 
-## <a id="requirements"></a> Requirements
+## <a id="requirements"></a> Requirements
 * Python 3.*
 * PIP
 * The "colorama" package. To install this, use:
