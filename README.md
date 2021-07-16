@@ -22,15 +22,17 @@
 * Python 3.*
 * PIP
 * The "colorama" package. To install this, use:
+* Google desktop credentials (optional)
+* The SduiAPI packet (optional, installation information [here]("#Wrapper"))
 
 ```bash
 python3 -m pip install colorama
 ```
 
-## Setup
+## Setup <a id="setup"></a>
 * [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
 * Extract the file to a location where you find it again.
-* Create a file called `secrets.py` in the root location.
+* Create a file called `secrets.py` in a location where you can remember it. You will need to copy it later.
 ![secrets.py file location](/docs/images/secrets.png)
 * Now you need a bearer token. If you need help with that, check [here](#Bearer)
 * Open the secrets.py file in your favorite text editor.
@@ -41,18 +43,17 @@ token = "YOUR_BEARER_TOKEN_HERE"
 ```
 
 If you are a bit more advanced, you can also use libraries like "cryptography" to encrypt your token.
-* Now, follow the tutorials on [Wrapper usage](#Wrapper)if you want to use this in your own project, or [CLI usage](#CLI)
+* Now, follow the tutorials on [Wrapper usage](#Wrapper) if you want to use this in your own project, or [CLI usage](#CLI). If you just want to use the prebuild calendar extention, check [Calendar extention usage](#Calendar)
 
-## <a id="Wrapper"></a>Wrapper usage
-- [ ] Coming soon!
 
-## <a id="CLI"></a>CLI Usage
+
+## <a id="CLI"></a>CLI usage
 To use the CLI, you need to know your Timetable ID.
 * Open the [Sdui Webapp](https://sdui.app) again.
 * Switch to your Timetable
 * Take a look at the URL Bar. You can find the ID here: **sdui.app/timetable/users/<YOUR_ID>**
 ![Url Bar](/docs/images/url.png)
-* Copy it, and open the `main.py` file.
+* Copy it, and open the `main.py` file in the `sdui_api_cli`.
 * At the very top, you'll find a section called "Variables". You have to paste your ID here (there is also an explanation what the Values do.):
 
 ```py
@@ -63,6 +64,28 @@ TIME_DELTA = 0 # Time difference in days. The value gets subtracted 
 MAX_DATA_LIFETIME = 3600 # The maximum lifetime of the data in seconds. If the data file is older that this value, the code will get a new file from the Sdui Website. A value lower than 3600 is not recommended, since it might lead to the webside thinking you are a Bot.
 DEBUG = False # You don't really have to touch this, unless you want do contribute, and if you do, you probably can see what this is doing.
 ```
+
+## <a id="Calendar"></a>Calendar extention usage
+* To use the Calendar extention, simply copy the `secrets.py` file from [setup]("#setup") to the `sdui_api_google_calendar_extention` folder.
+* Next, you need google desktop credentials. To get them, refer to [this](sdui_api_google_calendar_extention) guide.
+* rename your downloaded credentials to `credentials.json` and put them in the `sdui_api_google_calendar_extention` folder.
+* Now, you need your Table ID. To get it, use the [CLI]("#CLI") usage guide.
+* Once you got your table id, open the `main.py` file in the `sdui_api_google_calendar_extention` folder.
+* You'll need to paste the ID as described below this guide in the codebox.
+* If you want to use a calendar thats not you default calendar, go to your calendar, open the calendar settings and go to `Integrate calendar`.
+From there, copy the Calendar-ID at the very top. It should look like an email adress.
+* Paste the Calendar-ID as described below. If you want to use your default calendar, set the `CALENDAR_ID` to `"primary"`.
+
+```py
+### Variables ###
+
+CALENDAR_ID = "<YOUR_CALENDAR_ID_HERE>"
+TIME_DELTA = -7
+TABLE_ID = <YOUR_TABLE_ID_HERE>
+```
+
+## <a id="Wrapper"></a>Wrapper usage
+- [ ] Coming soon!
 
 ## <a id="Bearer"></a>Get your bearer token
 To get your bearer token, you need to follow these steps:
