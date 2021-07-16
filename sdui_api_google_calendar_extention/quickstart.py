@@ -1,10 +1,29 @@
+#   _____     _       _  ___  ______ _____   _    _
+#  /  ___|   | |     (_)/ _ \ | ___ \_   _| | |  | |
+#  \ `--.  __| |_   _ _/ /_\ \| |_/ / | |   | |  | |_ __ __ _ _ __  _ __   ___ _ __
+#   `--. \/ _` | | | | |  _  ||  __/  | |   | |/\| | '__/ _` | '_ \| '_ \ / _ \ '__|
+#  /\__/ / (_| | |_| | | | | || |    _| |_  \  /\  / | | (_| | |_) | |_) |  __/ |
+#  \____/ \__,_|\__,_|_\_| |_/\_|    \___/   \/  \/|_|  \__,_| .__/| .__/ \___|_|
+#                                                            | |   | |
+#                                                            |_|   |_|
+#                           BY vob#1634 and Anniken#0001
+
+### future import, do not touch! ###
 from __future__ import print_function
+
+### Variables ###
+
+CALENDAR_ID = "khopmssvb4f6qbi0rvp7bohr68@group.calendar.google.com"
+
+### Code - Do not touch unless you know what you are doing ###
+
 import datetime
 import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+import sdui_api_wrapper
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -37,7 +56,7 @@ def main():
     # Call the Calendar API
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     print('Getting the upcoming 10 events')
-    events_result = service.events().list(calendarId='primary', timeMin=now,
+    events_result = service.events().list(calendarId=CALENDAR_ID, timeMin=now,
                                         maxResults=10, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
