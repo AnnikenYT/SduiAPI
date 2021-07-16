@@ -7,6 +7,8 @@ import json
 import secrets
 import requests
 
+from jsbuilder import js
+
 
 class Wrapper:
     def __init__(self, DEBUG: bool = False, MAX_DATA_LIFETIME: int = 3600, TABLE_ID: int = None, TIME_DELTA: int = 0, TOKEN: str = None):
@@ -146,3 +148,4 @@ class Wrapper:
                                 "✖ Nothing Found" + Style.RESET_ALL)
 
         return [self.cleanlist(skip), found]
+
