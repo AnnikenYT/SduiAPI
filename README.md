@@ -29,7 +29,7 @@
 python3 -m pip install colorama
 ```
 
-## Setup <a id="setup"></a>
+## <a name="setup" /> Setup
 * [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
 * Extract the file to a location where you find it again.
 * Create a file called `secrets.py` in a location where you can remember it. You will need to copy it later.
@@ -47,7 +47,7 @@ If you are a bit more advanced, you can also use libraries like "cry
 
 
 
-## <a id="CLI"></a>CLI usage
+## <a name="CLI" /> CLI usage
 To use the CLI, you need to know your Timetable ID.
 * Open the [Sdui Webapp](https://sdui.app) again.
 * Switch to your Timetable
@@ -65,7 +65,7 @@ MAX_DATA_LIFETIME = 3600 # The maximum lifetime of the data in second
 DEBUG = False # You don't really have to touch this, unless you want do contribute, and if you do, you probably can see what this is doing.
 ```
 
-## <a id="Calendar"></a>Calendar extention usage
+## <a name="Calendar" /> Calendar extention usage
 * To use the Calendar extention, simply copy the `secrets.py` file from [setup]("#setup") to the `sdui_api_google_calendar_extention` folder.
 * Next, you need google desktop credentials. To get them, refer to [this](sdui_api_google_calendar_extention) guide.
 * rename your downloaded credentials to `credentials.json` and put them in the `sdui_api_google_calendar_extention` folder.
@@ -84,10 +84,10 @@ TIME_DELTA = -7
 TABLE_ID = <YOUR_TABLE_ID_HERE>
 ```
 
-## <a id="Wrapper"></a>Wrapper usage
+## <a name="Wrapper" /> Wrapper usage
 - [ ] Coming soon!
 
-## <a id="Bearer"></a>Get your bearer token
+## <a name="Bearer" /> Get your bearer token
 To get your bearer token, you need to follow these steps:
 * First, login on the [Sdui-WebApp](https://sdui.app).**Do not switch to the timetable view.**
 * Press `F12` on your keyboard.
