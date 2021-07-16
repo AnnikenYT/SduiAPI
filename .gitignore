@@ -6,3 +6,4 @@ testpacket.py
 .vscode/
 sduilogo.png
 googlecalendarapis/credentials.json
+googlecalendarapis/token.json
