@@ -99,12 +99,11 @@ class Wrapper:
     def mergeList(self, skip, found):
         for i in skip:
             for j in found:
-                if i["subject"] == j["subject"]:
+                if i["subject"] == j["subject"] and i["begin"] == j["begin"]:
                     pos = found.index(j)
                     found.remove(j)
                     found.insert(pos, i)
         return found
-                    
 
 
     def get_lessons_for_day(self, delta: int = 0):
@@ -143,6 +142,8 @@ class Wrapper:
                                         skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"begin":targets["time_begins_at"], "end":targets["time_ends_at"],})
                                     elif targets["kind"] == "CANCLED":
                                         skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "begin":targets["time_begins_at"], "end":targets["time_ends_at"]})
+                                    elif targets["kind"] == "BOOKABLE_CHANGE":
+                                        skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"ROOM_CHANGE", "begin":targets["time_begins_at"], "end":targets["time_ends_at"]})
                                     else:
                                         pass
                     if self.DEBUG:
