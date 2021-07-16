@@ -11,6 +11,8 @@
 ### future import, do not touch! ###
 from __future__ import print_function
 
+from sduiapi.packet import Wrapper
+
 ### Variables ###
 
 CALENDAR_ID = "khopmssvb4f6qbi0rvp7bohr68@group.calendar.google.com"
@@ -23,6 +25,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from sduiapi.packet import Wrapper
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -52,7 +55,7 @@ def main():
 
     service = build('calendar', 'v3', credentials=creds)
 
-    # Call the Calendar API
+        # Call the Calendar API
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     print('Getting the upcoming 10 events')
     events_result = service.events().list(calendarId=CALENDAR_ID, timeMin=now,
@@ -65,6 +68,8 @@ def main():
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
         print(start, event['summary'])
+
+    ## add today's events ##
 
 
 if __name__ == '__main__':
