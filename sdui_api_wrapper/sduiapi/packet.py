@@ -1,10 +1,8 @@
 import os
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 from colorama import Fore, Back, Style
-import time
 import calendar
 import json
-import secrets
 import requests
 
 
@@ -37,13 +35,14 @@ class Wrapper:
         """
         return datetime.utcfromtimestamp(int(ts)).strftime('%Y-%m-%d %H:%M:%S')
 
-
     def dt2unix(self, dt):
         """
         Convert datetime to unix timestamp
         """
         return calendar.timegm(dt.utctimetuple())
 
+    def sec2dt(self, sec):
+        return timedelta(seconds=sec)
     # TABLES: AnnikenYT:305870 BigBoy32:305516
 
 
@@ -76,7 +75,8 @@ class Wrapper:
         with open("LAST_DOWNLOAD", "w+") as file:
             file.seek(0)
             file.write(str(self.dt2unix(datetime.now())))
-        print(Fore.RED + "Data too old, downloading new data." + Style.RESET_ALL)
+        
+        if self.DEBUG: print(Fore.RED + "Data too old, downloading new data." + Style.RESET_ALL)
         url = f'https://api.sdui.app/v1/users/{str(self.TABLE_ID)}/timetable'
         headers = {
             "authorization": self.TOKEN,
@@ -95,6 +95,16 @@ class Wrapper:
                 broken_list.append(str(i))
                 fixed_list.append(i)
         return fixed_list
+    
+    def mergeList(self, skip, found):
+        for i in skip:
+            for j in found:
+                if i["subject"] == j["subject"] and i["begin"] == j["begin"]:
+                    pos = found.index(j)
+                    found.remove(j)
+                    found.insert(pos, i)
+        return found
+
 
     def get_lessons_for_day(self, delta: int = 0):
         """
@@ -103,9 +113,9 @@ class Wrapper:
         self.TIME_DELTA = delta
         datetoday=datetime.now().replace(
         hour=22, minute=0, second=0)-timedelta(self.TIME_DELTA+1)
-        print(Fore.CYAN + Style.BRIGHT +
-            f"Checking lessons for {datetoday.date()+timedelta(1)}" + Style.RESET_ALL)
-        
+        if self.DEBUG:
+            print(Fore.CYAN + Style.BRIGHT +
+                f"Checking lessons for {datetoday.date()+timedelta(1)}" + Style.RESET_ALL)
         try:
             jdata = self.load_data()
             lessons = jdata["data"]["lessons"]
@@ -129,9 +139,11 @@ class Wrapper:
                             for targetdate in targets["dates"]:
                                 if targetdate == checkdate:
                                     if targets["kind"] == "SUBSTITUTION":
-                                        skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"beginn":targets["time_begins_at"], "end":targets["time_ends_at"],})
+                                        skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"begin":targets["time_begins_at"], "end":targets["time_ends_at"],})
                                     elif targets["kind"] == "CANCLED":
-                                        skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "beginn":targets["time_begins_at"], "end":targets["time_ends_at"]})
+                                        skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "begin":targets["time_begins_at"], "end":targets["time_ends_at"]})
+                                    elif targets["kind"] == "BOOKABLE_CHANGE":
+                                        skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"ROOM_CHANGE", "begin":targets["time_begins_at"], "end":targets["time_ends_at"]})
                                     else:
                                         pass
                     if self.DEBUG:
@@ -145,4 +157,4 @@ class Wrapper:
                             print(Fore.BLACK + Style.BRIGHT + Back.RED +
                                 "✖ Nothing Found" + Style.RESET_ALL)
 
-        return [self.cleanlist(skip), found]
+        return self.mergeList(self.cleanlist(skip), found)
