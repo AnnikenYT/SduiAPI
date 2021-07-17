@@ -20,7 +20,7 @@
 python3 -m pip install colorama
 ```
 ## Setup
-* [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
+* [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file (or clone it with git cli, if you know what you are doing).
 * Extract the file to a location where you find it again.
 * Create a file called `secrets.py` in the root location.
 ![secrets.py file location](/docs/images/secrets.png)
@@ -34,7 +34,7 @@ If you are a bit more advanced, you can also use libraries like "cryptography" t
 * Now, follow the tutorials on [Wrapper usage](#Wrapper) if you want to use this in your own project, or [CLI usage](#CLI)
 
 ## <a id="Wrapper"></a>Wrapper usage
-- [ ] Coming soon!
+- [X] Available!
 
 ## <a id="CLI"></a>CLI Usage
 To use the CLI, you need to know your Timetable ID.
