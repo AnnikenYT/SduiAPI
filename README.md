@@ -9,6 +9,9 @@
 
 (This code is currently very very inefficient, if you have a better methode, please feel free to submit a pull request.)
 
+#### TODO:
+- [ ] Upload to pip
+
 ## Features:
 - [x] Pull data from the [Sdui API](https://api.sdui.de/)
 - [x] Parse the data to a readable format
