@@ -89,6 +89,7 @@ def get_lessons():
     """
     ???
     //TODO @BigBoy32 Add description please.
+    //@BigBoy32 Here. Here we are unziping the data, and getting the teacher map
     """
     teacher_map = {}
 
