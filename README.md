@@ -5,7 +5,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/network)
 [![GitHub stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/stargazers)
 
-# This is currently outdated, will get updated soon!
+#### This is currently slightly, possibly outated, will get updated soon!
 
 (This code is currently very very inefficient, if you have a better methode, please feel free to submit a pull request.)
 
