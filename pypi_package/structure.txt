@@ -1,0 +1,10 @@
+docs/
+src/
+test/
+venv/
+.git
+.gitignore
+LICENSE
+README.md
+requirements.txt
+setup.py

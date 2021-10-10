@@ -11,3 +11,4 @@ credentials/
 */__pycache__/
 */token.*
 sdui_api_google_calendar_extention/timezones.json
+data.json
