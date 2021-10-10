@@ -52,7 +52,7 @@ If you are a bit more advanced, you can also use libraries like "cry
 
 -   Now, follow the tutorials on [Wrapper usage](#Wrapper) if you want to use this in your own project, or [CLI usage](#CLI). If you just want to use the prebuild calendar extention, check [Calendar extention usage](#Calendar)
 
-## <a id="CLI"></a>CLI usage
+## CLI usage
 
 To use the CLI, you need to know your Timetable ID.
 
@@ -72,7 +72,7 @@ MAX_DATA_LIFETIME = 3600 # The maximum lifetime of the data in second
 DEBUG = False # You don't really have to touch this, unless you want do contribute, and if you do, you probably can see what this is doing.
 ```
 
-## <a id="Calendar"></a>Calendar extention usage
+## Calendar extention usage
 
 -   To use the Calendar extention, simply copy the `secrets.py` file from [setup]("#setup") to the `sdui_api_google_calendar_extention` folder.
 -   Next, you need google desktop credentials. To get them, refer to [this](sdui_api_google_calendar_extention) guide.
@@ -92,11 +92,11 @@ TIME_DELTA = -7
 TABLE_ID = <YOUR_TABLE_ID_HERE>
 ```
 
-## <a id="Wrapper"></a>Wrapper usage
+## Wrapper usage
 
-- [ ] Coming soon!
+-   Simply import the sduiapi.py and use the Wrapper class.
 
-## <a id="Bearer"></a>Get your bearer token
+## Get your bearer token
 
 To get your bearer token, you need to follow these steps:
 
