@@ -43,8 +43,6 @@ class Wrapper:
 
     def sec2dt(self, sec):
         return timedelta(seconds=sec)
-    # TABLES: AnnikenYT:305870 BigBoy32:305516
-
 
     def load_data(self):
         """
