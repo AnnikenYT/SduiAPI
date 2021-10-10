@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: sduiapi-CENSEDEV
+Version: 0.1.0
+Summary: A simple API WRAPPER for SDUI
+Home-page: https://github.com/AnnikenYT/SduiAPI
+Author: CenseDev
+Author-email: anniken@mooonshine.net
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/AnnikenYT/SduiAPI/issues
+Project-URL: Discord, https://discord.gg/vUeRha7mNA
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+UNKNOWN
+
