@@ -1,19 +1,19 @@
 # SduiAPI
 
-### A simple wrapper for the SduiAPI
+## A simple wrapper for the SduiAPI
 
 ![discord](https://img.shields.io/discord/865504310010839080?label=discord&style=flat-square)
 [![GitHub issues](https://img.shields.io/github/issues/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/issues)
 [![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/network)
 [![GitHub stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/stargazers)
 
-**We aren't associated with Sdui GmbH in any way**
+### We aren't associated with Sdui GmbH in any way
 
-#### TODO:
+### TODO:
 
 -   [ ] Upload to pip
 
-## Features:
+### Features
 
 -   [x] Pull data from the [Sdui API](https://api.sdui.de/)
 -   [x] Parse the data to a readable format
@@ -22,7 +22,7 @@
 -   [x] Process cancellations of lessons
 -   [x] Add to [google calendar](https://calendar.google.com/)
 
-## Requirements
+### Requirements
 
 -   Python 3.\*
 -   PIP
@@ -34,7 +34,7 @@
 python3 -m pip install colorama
 ```
 
-## Setup <a id="setup"></a>
+### Setup
 
 -   [Download](https://github.com/AnnikenYT/SduiAPI/releases/) the code as a ZIP file.
 -   Extract the file to a location where you find it again.
@@ -52,7 +52,7 @@ If you are a bit more advanced, you can also use libraries like "cry
 
 -   Now, follow the tutorials on [Wrapper usage](#Wrapper) if you want to use this in your own project, or [CLI usage](#CLI). If you just want to use the prebuild calendar extention, check [Calendar extention usage](#Calendar)
 
-## CLI usage
+### CLI usage
 
 To use the CLI, you need to know your Timetable ID.
 
@@ -72,7 +72,7 @@ MAX_DATA_LIFETIME = 3600 # The maximum lifetime of the data in second
 DEBUG = False # You don't really have to touch this, unless you want do contribute, and if you do, you probably can see what this is doing.
 ```
 
-## Calendar extention usage
+### Calendar extention usage
 
 -   To use the Calendar extention, simply copy the `secrets.py` file from [setup]("#setup") to the `sdui_api_google_calendar_extention` folder.
 -   Next, you need google desktop credentials. To get them, refer to [this](sdui_api_google_calendar_extention) guide.
@@ -92,11 +92,38 @@ TIME_DELTA = -7
 TABLE_ID = <YOUR_TABLE_ID_HERE>
 ```
 
-## Wrapper usage
+### Wrapper usage
 
--   Simply import the sduiapi.py and use the Wrapper class.
+#### Installation
 
-## Get your bearer token
+-   Since the Wrapper is not yet published on pypi, you will have to build it yourself.
+-   First, open the terminal in the `pypi_package` folder.
+-   Here, execute these commands:
+
+```ps
+# First make sure you have the newest version of pip:
+python3 -m pip install --upgrade pip
+# Then, install or upgrade the build script to the newest version:
+python3 -m pip install --upgrade build
+# Lastly, execute this command to build the packet:
+python3 -m build
+```
+
+-   Now, you can open the `dist/` folder in the `pypi_packet` folder.
+-   Here you should see these two files (The version [`-0.1.0-`] might change in later releases, if the command below fails, check if the version is correct.):
+    -   `sduiapi_CENSEDEV-0.1.0-py3-none-any.whl`
+    -   `sduiapi-CENSEDEV-0.1.0.tar.gz`
+-   Next, enter this command to install the packet:
+
+```bash
+python3 -m pip install sduiapi_CENSEDEV-0.1.0-py3-none-any.whl
+```
+
+-   Now, the python packet should be installed successfully
+
+### Usage
+
+### Get your bearer token
 
 To get your bearer token, you need to follow these steps:
 
