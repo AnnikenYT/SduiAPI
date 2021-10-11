@@ -4,6 +4,7 @@ from colorama import Fore, Back, Style
 import calendar
 import json
 import requests
+from sdui_api import classes
 
 
 class Wrapper:
@@ -125,19 +126,19 @@ class Wrapper:
         skip = []
         found = []
 
-        for i in lessons:
-            if lessons[i] is not None:
-                for d in lessons[i]["dates"]:
-                    unixtoday = self.dt2unix(datetoday)
-                    checkdate = unixtoday
-                    lessondate = d
+        for lesson in lessons:
+            if lesson is not None:
+                for date in lesson["dates"]:
+                    checkdate = self.dt2unix(datetoday)
+                    lessondate = date
 
-                    if lessons[i]["substituted_target_lessons"] != []:
-                        for targets in lessons[i]["substituted_target_lessons"]:
+                    if lesson["substituted_target_lessons"] != []:
+                        for targets in lesson["substituted_target_lessons"]:
                             for targetdate in targets["dates"]:
                                 if targetdate == checkdate:
                                     if targets["kind"] == "SUBSTITUTION":
-                                        skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"begin":targets["time_begins_at"], "end":targets["time_ends_at"],})
+                                        skip.append(classes.Substitution(targets))
+                                        # skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"begin":targets["time_begins_at"], "end":targets["time_ends_at"],})
                                     elif targets["kind"] == "CANCLED":
                                         skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "begin":targets["time_begins_at"], "end":targets["time_ends_at"]})
                                     elif targets["kind"] == "BOOKABLE_CHANGE":
@@ -148,7 +149,8 @@ class Wrapper:
                         print(Fore.BLACK + Style.DIM +
                             f"Checking date: {lessondate} against today's date {checkdate}" + Style.RESET_ALL)
                     if lessondate == checkdate:
-                        found.append({"subject":lessons[i]["meta"]["displayname"], "begin":lessons[i]["time_begins_at"], "end":lessons[i]["time_ends_at"]})
+                        found.append(classes.Lesson(lesson))
+                        # found.append({"subject":lessons[i]["meta"]["displayname"], "begin":lessons[i]["time_begins_at"], "end":lessons[i]["time_ends_at"]})
 
                     else:
                         if self.DEBUG:

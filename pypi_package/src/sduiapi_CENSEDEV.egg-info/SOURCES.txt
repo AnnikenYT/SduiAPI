@@ -2,6 +2,7 @@ LICENSE
 pyproject.toml
 setup.cfg
 src/sdui_api/__init__.py
+src/sdui_api/classes.py
 src/sdui_api/wrapper.py
 src/sduiapi_CENSEDEV.egg-info/PKG-INFO
 src/sduiapi_CENSEDEV.egg-info/SOURCES.txt
