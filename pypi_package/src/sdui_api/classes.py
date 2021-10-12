@@ -15,12 +15,21 @@ class Lesson:
             
         for teacher in lessonData["teachers"]:
             self.rooms.append(Teacher(teacher))
+        # Lesson dates: {self.dates},
     def __repr__(self) -> str:
-        return f"Lesson ID: {self.id}, Lesson dates: {self.dates}, Lesson name: {self.name}, Lesson shortcut: {self.shortcut}, Lesson color: {self.color}, Lesson beginning: {self.begin}, Lesson end: {self.end}, Lesson Rooms: {self.rooms}, Lesson Teachers: {self.teachers}"       
+        return f"Lesson ID: {self.id}, Lesson name: {self.name}, Lesson shortcut: {self.shortcut}, Lesson color: {self.color}, Lesson beginning: {self.begin}, Lesson end: {self.end}, Lesson Rooms: {self.rooms}, Lesson Teachers: {self.teachers}"       
     def __str__(self) -> str:
-        return f"Lesson ID: {self.id}, Lesson dates: {self.dates}, Lesson name: {self.name}, Lesson shortcut: {self.shortcut}, Lesson color: {self.color}, Lesson beginning: {self.begin}, Lesson end: {self.end}, Lesson Rooms: {self.rooms}, Lesson Teachers: {self.teachers}"       
+        return f"Lesson ID: {self.id}, Lesson name: {self.name}, Lesson shortcut: {self.shortcut}, Lesson color: {self.color}, Lesson beginning: {self.begin}, Lesson end: {self.end}, Lesson Rooms: {self.rooms}, Lesson Teachers: {self.teachers}"       
 
 class Substitution(Lesson):
+    def __init__(self, lessonData) -> None:
+        Lesson.__init__(self, lessonData)
+        
+class Cancled(Lesson):
+    def __init__(self, lessonData) -> None:
+        Lesson.__init__(self, lessonData)
+
+class RoomChange(Lesson):
     def __init__(self, lessonData) -> None:
         Lesson.__init__(self, lessonData)
 

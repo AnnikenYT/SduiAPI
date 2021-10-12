@@ -1,10 +1,6 @@
 Metadata-Version: 2.1
 Name: sduiapi-CENSEDEV
-<<<<<<< HEAD
 Version: 0.1.1
-=======
-Version: 0.1.0
->>>>>>> b35fe3cef7a0e94fa87ddf88b9afddffb6ec0140
 Summary: A simple API WRAPPER for SDUI
 Home-page: https://github.com/AnnikenYT/SduiAPI
 Author: CenseDev

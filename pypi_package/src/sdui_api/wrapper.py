@@ -22,7 +22,7 @@ class Wrapper:
 
         `TOKEN` your bearer token, default: None
 
-        :returns: [[changes to default schedule], []]
+        `Returns`: full schedule
         """
         self.DEBUG = DEBUG
         self.MAX_DATA_LIFETIME = MAX_DATA_LIFETIME
@@ -94,18 +94,9 @@ class Wrapper:
                 broken_list.append(str(i))
                 fixed_list.append(i)
         return fixed_list
-    
-    def mergeList(self, skip, found):
-        for i in skip:
-            for j in found:
-                if i["subject"] == j["subject"] and i["begin"] == j["begin"]:
-                    pos = found.index(j)
-                    found.remove(j)
-                    found.insert(pos, i)
-        return found
 
 
-    def get_lessons_for_day(self, delta: int = 0):
+    def get_lessons_for_day(self, delta: int = 0) -> classes.Lesson:
         """
         Get lessons for a specific day
         """
@@ -126,35 +117,33 @@ class Wrapper:
         skip = []
         found = []
 
-        for lesson in lessons:
-            if lesson is not None:
-                for date in lesson["dates"]:
+        for i in lessons:
+            if lessons[i] is not None:
+                for date in lessons[i]["dates"]:
                     checkdate = self.dt2unix(datetoday)
                     lessondate = date
 
-                    if lesson["substituted_target_lessons"] != []:
-                        for targets in lesson["substituted_target_lessons"]:
+                    if lessons[i]["substituted_target_lessons"] != []:
+                        for targets in lessons[i]["substituted_target_lessons"]:
                             for targetdate in targets["dates"]:
                                 if targetdate == checkdate:
                                     if targets["kind"] == "SUBSTITUTION":
-                                        skip.append(classes.Substitution(targets))
-                                        # skip.append({"subject":targets["subject"]["meta"]["displayname"], "oftype":"SUB", "teacher":targets["teachers"][0]["name"],"begin":targets["time_begins_at"], "end":targets["time_ends_at"],})
+                                        found.append(classes.Substitution(targets))
                                     elif targets["kind"] == "CANCLED":
-                                        skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"CANCLED", "begin":targets["time_begins_at"], "end":targets["time_ends_at"]})
+                                        found.append(classes.Cancled(targets))
                                     elif targets["kind"] == "BOOKABLE_CHANGE":
-                                        skip.append({"subject":targets["course"]["meta"]["displayname"], "oftype":"ROOM_CHANGE", "begin":targets["time_begins_at"], "end":targets["time_ends_at"]})
+                                        found.append(classes.RoomChange(targets))
                                     else:
                                         pass
                     if self.DEBUG:
                         print(Fore.BLACK + Style.DIM +
                             f"Checking date: {lessondate} against today's date {checkdate}" + Style.RESET_ALL)
                     if lessondate == checkdate:
-                        found.append(classes.Lesson(lesson))
-                        # found.append({"subject":lessons[i]["meta"]["displayname"], "begin":lessons[i]["time_begins_at"], "end":lessons[i]["time_ends_at"]})
+                        found.append(classes.Lesson(lessons[i]))
 
                     else:
                         if self.DEBUG:
                             print(Fore.BLACK + Style.BRIGHT + Back.RED +
                                 "✖ Nothing Found" + Style.RESET_ALL)
 
-        return self.mergeList(self.cleanlist(skip), found)
+        return self.cleanlist(found)
