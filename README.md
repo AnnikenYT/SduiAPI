@@ -1,6 +1,6 @@
 # SduiAPI
 
-## A simple wrapper for the SduiAPI
+### A simple wrapper for the SduiAPI
 
 ![discord](https://img.shields.io/discord/865504310010839080?label=discord&style=flat-square)
 [![GitHub issues](https://img.shields.io/github/issues/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/issues)
