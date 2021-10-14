@@ -14,8 +14,23 @@ class Lesson:
             self.rooms.append(Room(room))
             
         for teacher in lessonData["teachers"]:
-            self.rooms.append(Teacher(teacher))
+            self.teachers.append(Teacher(teacher))
         # Lesson dates: {self.dates},
+
+    def getRoom(self, room_number: int):
+        try:
+            return self.rooms[room_number-1]
+        except:
+            return Room({"id": "-1", "name": "No room found", "shortcut": "Empty Room"})
+
+
+    def getTeacher(self, teacher_number: int):
+        try:
+            return self.teachers[teacher_number-1]
+        except:
+            return Teacher({"id": "-1", "name": "No teacher found", "shortcut": "No Teacher"})
+
+
     def __repr__(self) -> str:
         return f"Lesson ID: {self.id}, Lesson name: {self.name}, Lesson shortcut: {self.shortcut}, Lesson color: {self.color}, Lesson beginning: {self.begin}, Lesson end: {self.end}, Lesson Rooms: {self.rooms}, Lesson Teachers: {self.teachers}"       
     def __str__(self) -> str:
@@ -30,6 +45,19 @@ class Cancled(Lesson):
         Lesson.__init__(self, lessonData)
 
 class RoomChange(Lesson):
+    def __init__(self, lessonData) -> None:
+        Lesson.__init__(self, lessonData)
+
+# Hey you, snooping around in the code, huh?
+# You might be wondering what this does.
+# And if you think it doesnt do anything, youd be completely....
+# ...right, actually.
+# I have just created this, because I wanted to implement moved lessons,
+# as the name suggests. But now im to lazy to actually write the code to
+# implement it. Instead im sitting here, writing this comment.
+# I don't know what you will do with this information, but here you go! :)
+# Have a gread tay.
+class MovedTo(Lesson):
     def __init__(self, lessonData) -> None:
         Lesson.__init__(self, lessonData)
 
