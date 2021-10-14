@@ -12,6 +12,7 @@
 ### TODO:
 
 -   [ ] Upload to pip
+-   [ ] Ask Sdui for approval on the Alexa Skill we are working on :)
 
 ### Features
 
