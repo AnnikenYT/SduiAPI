@@ -75,56 +75,59 @@ export class Lesson {
     constructor(lesson: ILesson) {
         this.lesson = lesson;
     }
-    getId(): number {
+    get id(): number {
         return this.lesson.id;
     }
-    getName(): string {
+    get name(): string {
         return this.lesson.meta.displayname;
     }
-    getShortcut(): string {
+    get shortcut(): string {
         return this.lesson.meta.shortcut;
     }
-    getColor(): TColor {
+    get color(): TColor {
         return this.lesson.meta.color;
     }
-    getKind(): TKind {
+    get kind(): TKind {
         return this.lesson.kind;
     }
-    getTimespan(): string {
+    get timespan_string(): string {
         return `${this.lesson.time_begins_at} - ${this.lesson.time_ends_at}`;
     }
-    getTeachers(): string {
+    get teachers_string(): string {
         return this.lesson.teachers.map((teacher: ITeacher) => {
             return teacher.name;
         }).join(', ');
     }
-    getGrades(): string {
+    get grades(): string {
         return this.lesson.grades.map((grade: IGrade) => {
             return grade.name;
         }).join(', ');
     }
-    getBookables(): string {
+    get bookables_string(): string {
         return this.lesson.bookables.map((bookable: IBookable) => {
             return bookable.name;
         }).join(', ');
     }
-    getComment(): string {
+    get comment(): string {
         return this.lesson.comment;
     }
-    getCourse(): ICourse {
+    get course(): ICourse {
         return this.lesson.course;
     }
-    getSubstitutedTargetLessons(): ILesson[] {
+    get substituted_target_lessons(): ILesson[] {
         return this.lesson.substituted_target_lessons;
     }
-    getSubstitutedPivot(): ISubstitutedPivot[] {
+    get substituted_pivot(): ISubstitutedPivot[] {
         return this.lesson.substituted_pivot;
     }
-    getReferencedPivot(): any[] {
+    get reference_pivot(): any[] {
         return this.lesson.referenced_pivot;
     }
-    getReferencedTargetLessons(): any[] {
+    get referenced_target_lessons(): any[] {
         return this.lesson.referenced_target_lessons;
+    }
+    get bookables(): IBookable[] {
+        return this.bookables
     }
 }
 

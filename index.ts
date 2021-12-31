@@ -5,36 +5,34 @@ var colors = require('colors/safe');
 
 import { Lesson, ILessons, TKind, ILesson, Event, Cancled, TLesson } from "./types"
 
-export function getLessons(TOKEN: string, USER: number, TIMEDELTA: number = 0, CACHE_DATA?: boolean): TLesson[] {
+export function getLessons(TOKEN: string, USER: number, TIMEDELTA: number = 0, CACHE_DATA?: boolean): Promise<TLesson[]> {
     /**
      * Get all lessons from the API
      * @param TOKEN {string} The API token
      * @param USER {number} The user timetable ID
      * @param TIMEDELTA {number} The time delta in days
      * @param CACHE_DATA {boolean} Whether to cache the data or not
-     * @returns {TLesson[]} The lessons
+     * @returns {Promise<TLesson>} The lessons
      */
     const API_URL = 'https://api.sdui.app/v1/'
     const TIMETABLE_URL: string = API_URL + 'users/' + USER + '/timetable'
-
-    let l: TLesson[] = []
+    let lesson_promise = new Promise<Lesson[]>((resolve, reject) => {
     // make a request to the API using the token as authentication
-    request.get({
-        url: TIMETABLE_URL,
-        headers: {
-            'Authorization': TOKEN
-        }
-    }, (err: any, res: any, body: any) => {
-        if (err) {
-            console.log(err)
-            return
-        }
-        var data = JSON.parse(body)
-        data = data.data
-        const lessons: ILessons = data.lessons
-        const lessonsToday: Lesson[] = getLessonsToday(lessons)
-        // set l to the lessons today
-        l = lessonsToday
+        request.get({
+            url: TIMETABLE_URL,
+            headers: {
+                'Authorization': TOKEN
+            }
+        }, (err: any, res: any, body: any) => {
+            if (err) {
+                reject(err)
+            }
+            var data = JSON.parse(body)
+            data = data.data
+            const lessons: ILessons = data.lessons
+            const lessonsToday = getLessonsToday(lessons)
+            resolve(lessonsToday)
+        })
     })
     
     function getLessonsToday(lessons: ILessons): TLesson[] {
@@ -81,5 +79,5 @@ export function getLessons(TOKEN: string, USER: number, TIMEDELTA: number = 0, C
         return Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1 + TIMEDELTA, 23) / 1000
     }
 
-    return l
+    return lesson_promise;
 }
