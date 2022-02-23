@@ -1,13 +1,17 @@
-# SduiAPI
-
-### A simple wrapper for the SduiAPI
-
-![discord](https://img.shields.io/discord/865504310010839080?label=discord&style=flat-square)
-[![GitHub issues](https://img.shields.io/github/issues/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/issues)
-[![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/network)
-[![GitHub stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/stargazers)
+<div align="center">
+<h1>SduiAPI</h1>
+<h3>A simple wrapper for the SduiAPI</h3>    
+    
+[![discord](https://img.shields.io/discord/865504310010839080?label=discord&style=flat-square)]
+[![GitHub issues](https://img.shields.io/github/issues/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/issues)]
+[![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/network)]
+[![GitHub stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/stargazers)]
+    
+</div>
 
 ### We aren't associated with Sdui GmbH in any way
+
+### We are currently working on a JS / TS version of the script.
 
 ### TODO:
 
