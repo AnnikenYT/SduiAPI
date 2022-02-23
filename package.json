@@ -4,9 +4,10 @@
   "description": "An API Handler for the Sdui API",
   "main": "index.ts",
   "dependencies": {
+    "@types/inquirer": "^8.2.0",
+    "axios": "^0.26.0",
     "colors": "^1.4.0",
     "inquirer": "^8.2.0",
-    "request": "^2.88.2",
     "typescript": "^4.5.4"
   },
   "devDependencies": {
@@ -22,6 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/AnnikenYT/SduiAPI.git"
   },
+  "type": "module",
   "keywords": [
     "API",
     "Sdui",

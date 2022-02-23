@@ -1,83 +1,229 @@
-const request = require('request')
-const inquirer = require('inquirer')
-const fs = require('fs')
-var colors = require('colors/safe');
+import axios from "axios";
+import inquirer from "inquirer";
+import { Lesson, ISduiOptions, ILead, SduiNotAuthenticatedError } from "./types.js";
 
-import { Lesson, ILessons, TKind, ILesson, Event, Cancled, TLesson } from "./types"
+export class Sdui {
+	private token: string;
+	user: number;
+	private default_delta: number;
+	private cache_data: boolean;
+	api_url: string;
+	private timetable_url: string;
 
-export function getLessons(TOKEN: string, USER: number, TIMEDELTA: number = 0, CACHE_DATA?: boolean): Promise<TLesson[]> {
-    /**
-     * Get all lessons from the API
-     * @param TOKEN {string} The API token
-     * @param USER {number} The user timetable ID
-     * @param TIMEDELTA {number} The time delta in days
-     * @param CACHE_DATA {boolean} Whether to cache the data or not
-     * @returns {Promise<TLesson>} The lessons
-     */
-    const API_URL = 'https://api.sdui.app/v1/'
-    const TIMETABLE_URL: string = API_URL + 'users/' + USER + '/timetable'
-    let lesson_promise = new Promise<Lesson[]>((resolve, reject) => {
-    // make a request to the API using the token as authentication
-        request.get({
-            url: TIMETABLE_URL,
-            headers: {
-                'Authorization': TOKEN
-            }
-        }, (err: any, res: any, body: any) => {
-            if (err) {
-                reject(err)
-            }
-            var data = JSON.parse(body)
-            data = data.data
-            const lessons: ILessons = data.lessons
-            const lessonsToday = getLessonsToday(lessons)
-            resolve(lessonsToday)
-        })
-    })
-    
-    function getLessonsToday(lessons: ILessons): TLesson[] {
-        const lessonsToday: TLesson[] = []
-        // for each lesson in lessons, check if todays utctimetuple is in the lesson's dates
-        // get the keys of the lessons object
-        const keys = Object.keys(lessons)
-        // loop through the keys
-        keys.forEach((key: string) => {
-            // get the lesson
-            let lesson_data = lessons[key]
-            // get the utctimetuple of today and convert it to a number
-            const utctimetuple = getTimestamp()
-            // check if the utctimetuple is in the lesson's dates
-            if (lesson_data.dates.includes(utctimetuple)) {
-                let lesson = getSpecialLessons(lesson_data)
-                // if it is, add the lesson to the lessonsToday array
-                lessonsToday.push(lesson)
-            }
-        })
-        return lessonsToday;
-    }
-    
-    function getSpecialLessons(lesson: ILesson): Lesson {
-        if (lesson.substituted_target_lessons == []) return new Lesson(lesson)
-        for (let sublesson of lesson.substituted_target_lessons) {
-            if (sublesson.dates.includes(getTimestamp())) {
-                switch (lesson.kind) {
-                    case 'EVENT':
-                        return new Event(lesson);
-                    case "CANCLED":
-                        return new Cancled(lesson);
-                    default:
-                        return new Lesson(lesson);
-                }
+	constructor(token?: string, user?: number, options?: ISduiOptions) {
+		this.token = token || "";
+        this.user = user || 0;
+        const no_auth = options?.no_auth || false;
+        if (!this.token || !this.user) {
+            if (no_auth) {
+                throw new SduiNotAuthenticatedError();
+            } else {
+                this.authSync();
             }
         }
-        return new Lesson(lesson);
+		this.default_delta = options?.default_delta || 0;
+		this.cache_data = options?.cache_data || true;
+		this.api_url = options?.api_url || "https://api.sdui.app/v1";
+		this.timetable_url = `${this.api_url}/users/${user}/timetable`;
+	}
+	/**
+	 * Get lessons asyncrhonously. Recommended to use this method instead of getLessons()
+	 * NOTE: This method will take a while to complete. This is expected, and cannot be changed.
+	 * @param timedelta the delta in days. 0 is today, 1 is tomorrow, -1 is yesterday.
+	 * @default options.default_delta || 0
+	 */
+	public async getLessonsAsync(timedelta?: number): Promise<Lesson[]> {
+		let lessons: Lesson[] = [];
+		await axios
+			.get(this.timetable_url, {
+				headers: {
+					Authorization: `Bearer ${this.token}`,
+				},
+			})
+			.then((result) => {
+				const today = this.getTimestamp(timedelta);
+				const keys = Object.keys(result.data);
+				keys.forEach((key: string) => {
+                    const lesson: Lesson = result.data[key];
+                    console.debug(lesson.dates);
+					lesson.dates.forEach((date: number) => {
+						if (date === today) {
+							lessons.push(lesson);
+						}
+					});
+				});
+			});
+		return lessons;
     }
     
-    
-    // Helper Functions
-    function getTimestamp(): Number {
-        return Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1 + TIMEDELTA, 23) / 1000
+    /**
+     * @todo NOT IMPLEMENTED YET
+     */
+    public getLessonsSync(timedelta?: number): Lesson[] {
+        let lessons: Lesson[] = [];
+        axios
+            .get(this.timetable_url, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`,
+                },
+            })
+            .then((result) => {
+                const today = this.getTimestamp(timedelta);
+                const keys = Object.keys(result.data);
+                keys.forEach((key: string) => {
+                    const lesson: Lesson = result.data[key];
+                    lesson.dates.forEach((date: number) => {
+                        if (date === today) {
+                            lessons.push(lesson);
+                        }
+                    });
+                });
+            });
+        return lessons;
     }
 
-    return lesson_promise;
+	private getTimestamp(delta?: number): Number {
+		const timedelta = delta || this.default_delta;
+		return (
+			Date.UTC(
+				new Date().getFullYear(),
+				new Date().getMonth(),
+				new Date().getDate() - 1 + timedelta,
+				23
+			) / 1000
+		);
+	}
+
+	public authSync() {
+		inquirer
+			.prompt([
+				{
+					type: "list",
+					name: "Authentication Method",
+					message: "Select an authentication method",
+					choices: ["Token", "Username and Password"],
+				},
+			])
+			.then((answers: any) => {
+				if (answers.AuthenticationMethod === "Token") {
+					this.tokenAuth();
+				} else {
+					inquirer
+						.prompt([
+							{
+								type: "input",
+								name: "School",
+								message: "Enter your school zipcode or name",
+							},
+						])
+						.then((answers: any) => {
+							axios
+								.get(
+									`${
+										this.api_url
+									}/leads?search=${encodeURIComponent(
+										answers.School
+									)}`
+								)
+								.then((result) => {
+									const leads: ILead[] = result.data.data;
+									if (leads.length === 0) {
+										console.log("No leads found");
+										return;
+									}
+									inquirer
+										.prompt([
+											{
+												type: "list",
+												name: "Lead",
+												message: "Select a lead",
+												choices: leads.map(
+													(lead: ILead) => {
+														return {
+															name: `${lead.name} (${lead.city})`,
+															value: lead.slink,
+														};
+													}
+												),
+											},
+										])
+										.then((answers: any) => {
+											this.usernamePasswordAuth(
+												answers.Lead
+											);
+										});
+								});
+						});
+				}
+			});
+	}
+	private tokenAuth() {
+		inquirer
+			.prompt([
+				{
+					type: "input",
+					name: "Token",
+					message: "Enter your token",
+				},
+			])
+			.then((answers: any) => {
+				this.token = answers.Token;
+			});
+	}
+	private usernamePasswordAuth(school: number) {
+		inquirer
+			.prompt([
+				{
+					type: "input",
+					name: "Username",
+					message: "Enter your username",
+				},
+				{
+					type: "password",
+					name: "Password",
+					message: "Enter your password",
+				},
+			])
+			.then((answers: any) => {
+				axios
+					.post(`${this.api_url}/auth/login`, {
+						identifier: answers.Username,
+						password: answers.Password,
+						slink: school,
+						showError: true,
+						stayLoggedIn: true,
+						token: "",
+					})
+					.then((result) => {
+						this.token = result.data.data.access_token;
+						console.log(
+							"Authentication successful, getting user data..."
+						);
+						this.getUserSync();
+					})
+					.catch((error) => {
+						console.log("Authentication failed");
+					});
+			});
+	}
+	public getUserSync() {
+		axios
+			.get(`${this.api_url}/users/self`, {
+				headers: {
+					Authorization: `Bearer ${this.token}`,
+				},
+			})
+			.then((result) => {
+				const response = result.data.data;
+				this.user = response.id;
+				console.log(
+					`Logged in as ${response.firstname} ${response.lastname} (${response.email})`
+				);
+			})
+			.catch((error) => {
+				console.log(error.response.data);
+			});
+    }
 }
+
+// const sdui = new Sdui();
