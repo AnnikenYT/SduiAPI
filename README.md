@@ -2,10 +2,10 @@
 <h1>SduiAPI</h1>
 <h3>A simple wrapper for the SduiAPI</h3>    
     
-[![discord](https://img.shields.io/discord/865504310010839080?label=discord&style=flat-square)]
-[![GitHub issues](https://img.shields.io/github/issues/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/issues)]
-[![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/network)]
-[![GitHub stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/stargazers)]
+[![discord](https://img.shields.io/discord/865504310010839080?label=discord&style=flat-square)](https://discord.gg/3SnRken23Q)
+[![GitHub issues](https://img.shields.io/github/issues/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/issues)
+[![GitHub forks](https://img.shields.io/github/forks/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/network)
+[![GitHub stars](https://img.shields.io/github/stars/AnnikenYT/SduiAPI?style=flat-square)](https://github.com/AnnikenYT/SduiAPI/stargazers)
     
 </div>
 
